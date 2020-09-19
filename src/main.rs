@@ -1,28 +1,29 @@
+use std::fs;
 use structopt::StructOpt;
+
+const RSHDIR: &str = ".rsh";
 
 #[derive(StructOpt, Debug)]
 #[structopt(about = "redshift!")]
 enum RedShift {
-    Init { path: std::path::PathBuf },
+    Init { path: String },
     Status,
 }
 
-fn init(path: std::path::PathBuf) -> Option<()> {
-    println!("Inside init!");
-    println!("path = {:?}", path);
-    Some(())
+fn init(path: String) -> std::io::Result<()> {
+    let dir = format!("{}/{}", path, RSHDIR);
+    fs::create_dir(dir)
 }
 
-fn status() -> Option<()> {
+fn status() -> std::io::Result<()> {
     println!("Inside status!");
-    Some(())
+    Ok(())
 }
 
-fn main() {
+fn main() -> std::io::Result<()> {
     let args = RedShift::from_args();
-    let result = match args {
+    match args {
         RedShift::Init { path } => init(path),
         RedShift::Status => status(),
-    };
-    println!("result = {:?}", result);
+    }
 }
