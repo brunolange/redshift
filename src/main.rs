@@ -1,7 +1,7 @@
-use std::fs;
-use structopt::StructOpt;
+mod redshift;
+mod utils;
 
-const RSHDIR: &str = ".rsh";
+use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
 #[structopt(about = "redshift!")]
@@ -10,20 +10,11 @@ enum RedShift {
     Status,
 }
 
-fn init(path: String) -> std::io::Result<()> {
-    let dir = format!("{}/{}", path, RSHDIR);
-    fs::create_dir(dir)
-}
-
-fn status() -> std::io::Result<()> {
-    println!("Inside status!");
-    Ok(())
-}
-
 fn main() -> std::io::Result<()> {
     let args = RedShift::from_args();
+    utils::hello();
     match args {
-        RedShift::Init { path } => init(path),
-        RedShift::Status => status(),
+        RedShift::Init { path } => redshift::init(path),
+        RedShift::Status => redshift::status(),
     }
 }
