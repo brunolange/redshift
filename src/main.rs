@@ -8,6 +8,7 @@ use structopt::StructOpt;
 enum RedShift {
     Init { path: String },
     Status,
+    HashObject { path: String },
 }
 
 fn main() -> std::io::Result<()> {
@@ -16,5 +17,6 @@ fn main() -> std::io::Result<()> {
     match args {
         RedShift::Init { path } => redshift::init(path),
         RedShift::Status => redshift::status(),
+        RedShift::HashObject { path } => redshift::hash_object(path),
     }
 }
