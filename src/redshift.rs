@@ -1,4 +1,3 @@
-use hex_literal::hex;
 use sha1::{Digest, Sha1};
 use std::fs;
 
@@ -24,15 +23,19 @@ pub fn status() -> std::io::Result<()> {
 }
 
 pub fn hash_object(path: String) -> std::io::Result<()> {
+    let data = fs::read(path)?;
+
     // create a Sha1 object
     let mut hasher = Sha1::new();
 
     // process input message
-    hasher.update(b"hello world");
+    hasher.update(data);
 
     // acquire hash digest in the form of GenericArray,
     // which in this case is equivalent to [u8; 20]
     let result = hasher.finalize();
-    assert_eq!(result[..], hex!("2aae6c35c94fcfb415dbe95f408b9ce91ee846ed"));
+
+    println!("result = {:?}", result);
+
     Ok(())
 }

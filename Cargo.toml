@@ -9,7 +9,6 @@ edition = "2018"
 [dependencies]
 structopt = "0.3"
 sha-1 = "0.9.1"
-hex-literal = "0.3.1"
 
 [[bin]]
 name = "rsh"
