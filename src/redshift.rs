@@ -33,7 +33,5 @@ pub fn hash_object(path: String) -> std::io::Result<()> {
 
     let oid = format!("{:x}", hasher.finalize());
 
-    fs::write(format!(".rsh/{}", oid), data)?;
-
-    Ok(())
+    fs::write(format!(".rsh/{}", oid), data)
 }

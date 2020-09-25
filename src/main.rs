@@ -13,7 +13,7 @@ enum RedShift {
 
 fn main() -> std::io::Result<()> {
     let args = RedShift::from_args();
-    utils::hello();
+    // utils::hello();
     match args {
         RedShift::Init { path } => redshift::init(path),
         RedShift::Status => redshift::status(),
