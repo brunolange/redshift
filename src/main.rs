@@ -1,5 +1,4 @@
 mod redshift;
-mod utils;
 
 use structopt::StructOpt;
 
@@ -14,7 +13,6 @@ enum RedShift {
 
 fn main() -> std::io::Result<()> {
     let args = RedShift::from_args();
-    // utils::hello();
     match args {
         RedShift::Init { path } => redshift::init(path),
         RedShift::Status => redshift::status(),

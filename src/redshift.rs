@@ -1,5 +1,6 @@
-use sha1::{Digest, Sha1};
 use std::fs;
+
+mod utils;
 
 const RSHDIR: &str = ".rsh";
 
@@ -16,9 +17,7 @@ pub fn status() -> std::io::Result<()> {
 
 pub fn hash_object(path: String) -> std::io::Result<()> {
     let data = fs::read(path)?;
-    let mut hasher = Sha1::new();
-    hasher.update(&data);
-    let oid = format!("{:x}", hasher.finalize());
+    let oid = utils::sha1(&data);
 
     fs::write(format!(".rsh/objects/{}", oid), data)
 }
