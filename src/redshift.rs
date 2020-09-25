@@ -24,14 +24,20 @@ pub fn status() -> std::io::Result<()> {
 
 pub fn hash_object(path: String) -> std::io::Result<()> {
     let data = fs::read(path)?;
-
-    // create a Sha1 object
     let mut hasher = Sha1::new();
-
-    // process input message
     hasher.update(&data);
-
     let oid = format!("{:x}", hasher.finalize());
 
     fs::write(format!(".rsh/{}", oid), data)
+}
+
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_status() {
+        let result = status();
+        assert!(result.is_ok());
+    }
 }
