@@ -29,13 +29,11 @@ pub fn hash_object(path: String) -> std::io::Result<()> {
     let mut hasher = Sha1::new();
 
     // process input message
-    hasher.update(data);
+    hasher.update(&data);
 
-    // acquire hash digest in the form of GenericArray,
-    // which in this case is equivalent to [u8; 20]
-    let result = hasher.finalize();
+    let oid = format!("{:x}", hasher.finalize());
 
-    println!("result = {:?}", result);
+    fs::write(format!(".rsh/{}", oid), data)?;
 
     Ok(())
 }
