@@ -23,6 +23,13 @@ pub fn hash_object(path: String) -> std::io::Result<()> {
     fs::write(format!(".rsh/objects/{}", oid), data)
 }
 
+pub fn cat_file(oid: String) -> std::io::Result<()> {
+    let contents = fs::read_to_string(format!(".rsh/objects/{}", oid))?;
+    print!("{}", contents);
+    println!();
+    Ok(())
+}
+
 mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
