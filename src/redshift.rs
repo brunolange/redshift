@@ -4,17 +4,9 @@ use std::fs;
 const RSHDIR: &str = ".rsh";
 
 pub fn init(path: String) -> std::io::Result<()> {
-    let dir = format!("{}/{}", path, RSHDIR);
-    match fs::create_dir(&dir) {
-        Err(error) => {
-            println!("Got the following error: {}", error);
-            Err(error)
-        }
-        Ok(()) => {
-            println!("Initialized empty Redshift repository in {}", dir);
-            Ok(())
-        }
-    }
+    fs::create_dir(format!("{}/{}", path, RSHDIR))?;
+    fs::create_dir(format!("{}/{}/objects", path, RSHDIR))?;
+    Ok(())
 }
 
 pub fn status() -> std::io::Result<()> {
@@ -28,7 +20,7 @@ pub fn hash_object(path: String) -> std::io::Result<()> {
     hasher.update(&data);
     let oid = format!("{:x}", hasher.finalize());
 
-    fs::write(format!(".rsh/{}", oid), data)
+    fs::write(format!(".rsh/objects/{}", oid), data)
 }
 
 mod tests {
