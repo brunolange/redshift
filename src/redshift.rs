@@ -31,7 +31,7 @@ pub fn cat_file(oid: String) -> std::io::Result<()> {
 }
 
 mod tests {
-    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    #[allow(unused)]
     use super::*;
 
     #[test]
