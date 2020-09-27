@@ -16,10 +16,19 @@ pub fn status() -> std::io::Result<()> {
 }
 
 pub fn hash_object(path: String) -> std::io::Result<()> {
+    let kind = "blob";
+    let null: u8 = 0;
     let data = fs::read(path)?;
-    let oid = utils::sha1(&data);
 
-    fs::write(format!(".rsh/objects/{}", oid), data)
+    let mut obj = vec![];
+    obj.extend(kind.as_bytes());
+    obj.push(null);
+    obj.extend(&data);
+
+    let oid = utils::sha1(&obj);
+    fs::write(format!(".rsh/objects/{}", oid), obj)?;
+    println!("Saved object {:?}", oid);
+    Ok(())
 }
 
 pub fn cat_file(oid: String) -> std::io::Result<()> {
