@@ -15,14 +15,12 @@ pub fn status() -> std::io::Result<()> {
     Ok(())
 }
 
-pub fn hash_object(path: String) -> std::io::Result<()> {
-    let kind = "blob";
-    let null: u8 = 0;
+pub fn hash_object(path: String, kind: &str) -> std::io::Result<()> {
     let data = fs::read(path)?;
 
     let mut obj = vec![];
     obj.extend(kind.as_bytes());
-    obj.push(null);
+    obj.push(0); // the null byte
     obj.extend(&data);
 
     let oid = utils::sha1(&obj);
