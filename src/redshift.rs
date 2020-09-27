@@ -42,20 +42,10 @@ pub fn write_tree<P: AsRef<Path>>(dir: P, depth: usize) -> std::io::Result<()> {
         let entry = entry?;
         let path = entry.path();
         let metadata = fs::metadata(&path)?;
-        if metadata.is_file() {
-            println!(
-                "- {:indent$}{}",
-                "",
-                path.display().to_string(),
-                indent = depth * 4
-            )
-        } else if metadata.is_dir() {
-            println!(
-                "+ {:indent$}{}",
-                "",
-                path.display().to_string(),
-                indent = depth
-            );
+        let is_dir = metadata.is_dir();
+        let push = if is_dir { 4 } else { 1 };
+        println!("- {:push$}{}", "", path.display().to_string(), push = push);
+        if is_dir {
             write_tree(&path, depth + 1)?;
         }
     }
