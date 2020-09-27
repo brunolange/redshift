@@ -44,6 +44,9 @@ pub fn write_tree<P: AsRef<Path>>(dir: P, depth: usize) -> std::io::Result<()> {
         let metadata = fs::metadata(&path)?;
         let is_dir = metadata.is_dir();
         let p = path.display().to_string();
+        if utils::is_ignored(&p) {
+            continue;
+        }
         let marker = if is_dir { "+" } else { "-" };
         println!("{} {:i$}{}", marker, "", p, i = if is_dir { 4 } else { 1 });
         if is_dir {
