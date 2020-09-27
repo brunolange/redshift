@@ -9,6 +9,7 @@ enum RedShift {
     Status,
     HashObject { path: String },
     CatFile { oid: String },
+    WriteTree { dir: String },
 }
 
 fn main() -> std::io::Result<()> {
@@ -18,5 +19,6 @@ fn main() -> std::io::Result<()> {
         RedShift::Status => redshift::status(),
         RedShift::HashObject { path } => redshift::hash_object(path, "blob"),
         RedShift::CatFile { oid } => redshift::cat_file(oid),
+        RedShift::WriteTree { dir } => redshift::write_tree(dir, 0),
     }
 }
