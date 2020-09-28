@@ -8,9 +8,12 @@ pub fn sha1(data: &Vec<u8>) -> String {
 
 pub fn is_ignored(path: &String) -> bool {
     let mut ignored = false;
-    if path.contains("./.git") || path.contains("./target") {
-        ignored = true
+    let ignore_list = vec!["./.git", "./target"];
+    for pattern in ignore_list {
+        if path.contains(pattern) {
+            ignored = true;
+            break;
+        }
     }
-    // add more rules here
     ignored
 }
