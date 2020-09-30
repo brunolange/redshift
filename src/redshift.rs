@@ -51,6 +51,8 @@ pub fn write_tree<P: AsRef<Path>>(dir: P, depth: usize) -> std::io::Result<()> {
         println!("{} {:i$}{}", marker, "", p, i = if is_dir { 4 } else { 1 });
         if is_dir {
             write_tree(&path, depth + 1)?;
+        } else {
+            hash_object(p, "blob")?;
         }
     }
 
